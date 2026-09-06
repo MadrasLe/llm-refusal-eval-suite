@@ -32,20 +32,20 @@ To run seamlessly on consumer or cloud GPUs (*e.g.*, NVIDIA L4 24GB, A100 80GB, 
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│ FASE 1: GERAÇÃO DO MODELO ALVO                              │
-│ 1. Carrega o modelo a ser avaliado em BF16                  │
-│ 2. Executa geração para os 30 prompts                       │
-│ 3. Salva saídas em 'target_responses.json'                  │
-│ 4. Executa gc.collect() e torch.cuda.empty_cache()          │
+│ PHASE 1: TARGET MODEL GENERATION                            │
+│ 1. Load target model in BF16                                │
+│ 2. Execute generation across the 30 benchmark prompts       │
+│ 3. Save raw outputs to 'target_responses.json'              │
+│ 4. Run gc.collect() and torch.cuda.empty_cache()            │
 └──────────────────────────────┬──────────────────────────────┘
-                               │ (VRAM 100% liberada)
+                               │ (100% VRAM Released)
                                ▼
 ┌─────────────────────────────────────────────────────────────┐
-│ FASE 2: AUDITORIA COM JUIZ LLM (QWEN)                       │
-│ 1. Carrega o Juiz Qwen em BF16                              │
-│ 2. Audita cada resposta com zero-temperature e CoT          │
-│ 3. Extrai <reasoning> e <verdict>[REFUSAL | FULFILLED]      │
-│ 4. Gera tabela no terminal, JSON e 'refusal_audit_report.md'│
+│ PHASE 2: LLM-AS-A-JUDGE AUDIT (QWEN)                        │
+│ 1. Load Qwen Judge model in BF16                            │
+│ 2. Audit each response with zero-temperature and CoT        │
+│ 3. Extract <reasoning> and <verdict>[REFUSAL | FULFILLED]   │
+│ 4. Output terminal summary, JSON & 'refusal_audit_report.md'│
 └─────────────────────────────────────────────────────────────┘
 ```
 
